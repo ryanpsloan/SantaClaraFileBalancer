@@ -109,24 +109,26 @@ if(isset($_FILES)) {
                     //var_dump($arr[$key]);
                     //var_dump($data[$transactionDesc][$earningCode][$key]);
                     $glCodeInput = '0000';
+                    //credit
                     if ($arr[$key]['debitTest']) {
                         $newLine = array($data[$transactionDesc][$earningCode][$key]['document#'], $data[$transactionDesc][$earningCode][$key]['effectiveDate'],
                             $data[$transactionDesc][$earningCode][$key]['transactionDescription'], $data[$transactionDesc][$earningCode][$key]['fund'],
                             $data[$transactionDesc][$earningCode][$key]['fiscalYear'], $data[$transactionDesc][$earningCode][$key]['department'],
                             $data[$transactionDesc][$earningCode][$key]['project'], $glCodeInput,
-                            '0.00', $toBalance[$transactionDesc][$earningCode][$key]['difference'],
+                            '0.00', $diff = $toBalance[$transactionDesc][$earningCode][$key]['difference'],
                             $data[$transactionDesc][$earningCode][$key]['hours'], $data[$transactionDesc][$earningCode][$key]['earningCode']);
-                        $output[$transactionDesc][$earningCode][] = "<span><strong>$newLine[2] | $newLine[6] | $newLine[7] &rarr; Added Credit Line: $". $toBalance[$transactionDesc][$earningCode][$key]['difference']. " | GL Code: $glCodeInput</strong></span>";
+                        $output[$transactionDesc][$earningCode][] = "<span><strong>$newLine[2] | $newLine[11] &rarr; Added Credit Line: $" . $diff . " | GL Code: $glCodeInput</strong></span>";
 
-                    } else {
+                    }
+                    //debit
+                    else {
                         $newLine = array($data[$transactionDesc][$earningCode][$key]['document#'], $data[$transactionDesc][$earningCode][$key]['effectiveDate'],
                             $data[$transactionDesc][$earningCode][$key]['transactionDescription'], $data[$transactionDesc][$earningCode][$key]['fund'],
                             $data[$transactionDesc][$earningCode][$key]['fiscalYear'], $data[$transactionDesc][$earningCode][$key]['department'],
                             $data[$transactionDesc][$earningCode][$key]['project'], $glCodeInput,
-                            $toBalance[$transactionDesc][$earningCode][$key]['difference'], '0.00',
+                            $diff = $toBalance[$transactionDesc][$earningCode][$key]['difference'], '0.00',
                             $data[$transactionDesc][$earningCode][$key]['hours'], $data[$transactionDesc][$earningCode][$key]['earningCode']);
-                        $output[$transactionDesc][$earningCode][] = "<span><strong>$newLine[2] | $newLine[6] | $newLine[7] &rarr; Added Debit Line: $". $toBalance[$transactionDesc][$earningCode][$key]['difference']." | GL Code: $glCodeInput</strong></span>";
-
+                        $output[$transactionDesc][$earningCode][] = "<span><strong>$newLine[2] | $newLine[11] &rarr; Added Debit Line: $" . $diff ." | GL Code: $glCodeInput</strong></span>";
                     }
                     $final[] = $newLine;
                     $linesCreated++;
